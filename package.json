@@ -8,7 +8,7 @@
     "node": ">=7.0"
   },
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "ng": "ng",
     "postinstall": "node build.js",
     "test": "node test.js",

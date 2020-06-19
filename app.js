@@ -1,13 +1,16 @@
 // app.js
 
+// environment =================================================
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // modules =================================================
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cors = require('cors');
-var dotenv = require('dotenv').config();
-
 // configuration ===========================================
 
 process.env.PWD = process.cwd();
