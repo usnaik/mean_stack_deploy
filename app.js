@@ -1,7 +1,7 @@
 // app.js
 
 // environment =================================================
-// if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NG_CMD == 'dev') {
 //   require('dotenv').config();
 // }
 
