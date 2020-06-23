@@ -1,0 +1,20 @@
+branch-defaults:
+  master:
+    environment: prod
+    group_suffix: null
+  staging:
+    environment: staging
+global:
+  application_name: NodeDeploy
+  branch: null
+  default_ec2_keyname: aws-eb
+  default_platform: Node.js 12 running on 64bit Amazon Linux 2
+  default_region: ap-south-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: null
+  sc: git
+  workspace_type: Application
