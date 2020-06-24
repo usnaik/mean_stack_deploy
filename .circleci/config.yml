@@ -1,0 +1,58 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn test
+
+  deploy:
+    docker:
+      - image: circleci/node:10
+      working_directory: ~/repo
+      steps:
+        - checkout
+        - run: yarn install
+        - run:
+            name: Use credentials for AWS
+            command: |
+               mkdir ~/.aws && printf "[profile eb-cli]\naws_access_key_id = ${AWS_ACCESS_KEY_ID}\naws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" > ~/.aws/config
+        - run:
+          name: Install AWS CLI
+          command: sudo apt-get -y -qq install python-dev python-pip python
+        - run:
+          name: Install Six
+          command: sudo easy_install --upgrade six
+        - run:
+          name: Install AWS EB
+          command: sudo pip install awsebcli -qqq
+        - run:
+          name: deploy to EB
+          command: ls -al
+        - run:
+          name: deploy to EB
+          command: eb deploy --debug --profile ev-cli
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+          - build
+          filters:
+            branches:
+              only: master
+ 
